@@ -1,0 +1,62 @@
+---
+title: "RC 159-5: Evaluation of three differents to coltrol red slime"
+author: ron Collins
+Date: 
+output:
+  word_document: default
+  pdf_document: default
+  html_notebook: default
+  html_document: default
+---
+# Introduction
+
+#from work to home
+
+## load required packages
+```{r load packages echo = FALSE, message = FALSE}
+library(readxl)
+library(car)
+library(data.table)
+library(dplyr)
+library(tidyr)
+```
+
+# input
+```{r input RC159-1 echo = FALSE}
+# input RC159-1 excel file into dataframe
+RC159_5Data <- read_excel("RC159_5a.xlsx", sheet = 1, col_names = TRUE, col_types = NULL, na = "NA", skip = 0)
+```
+# convert class of dataframeRC159_1Data variables
+```{r echo = False}
+RC159_5Data$Trt <- as.factor(RC159_5Data$Trt)
+RC159_5Data$concBac <- as.factor(RC159_5Data$concBac)
+
+```
+
+# summary
+```{r echo = False}
+### group mtcars by cylinders and return some averages
+RC159_5DataSum <- RC159_5Data %>%
+select(Trt, concBac, count) %>%
+group_by(Trt,concBac) %>%
+summarise(Total_mean = mean(count))
+RC159_5DataSum
+# elimate missing data to get diff means
+#df %>% drop_na()
+
+```
+
+
+#  preliminary analysis of Experiment RC 159-1
+## analysi of variance for total area
+```{r echo = False}
+# Analysis for Differ
+ prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5Data, na.action=na.omit)
+summary(prelim.lm)
+
+Anova(prelim.lm,type='II')
+```
+### pair wise t test diff vs PlantId
+```{r echo = False}
+pairwise.t.test(RC159_5Data$count, RC159_5Data$Trt)
+```

@@ -10,10 +10,10 @@ output:
 ---
 # Introduction
 
-#from work to home
+## Contains Control 
 
 ## load required packages
-```{r load packages echo = FALSE, message = FALSE}
+```{r load packages, echo = FALSE}
 library(readxl)
 library(car)
 library(data.table)
@@ -21,19 +21,31 @@ library(dplyr)
 library(tidyr)
 ```
 
-# input
-```{r input RC159-1 echo = FALSE}
+### input
+```{r input RC159_5, echo = FALSE}
+#################
+# variable definition
+#  exp: Experiment number
+#  expRep: Experiment number
+#  Trt: antibiotic or no antibiotic
+#  coccBac: Bacteria concentration applied to plate
+#  repNo: Plate number
+#  count: number of colonies counted
+##################
+
 # input RC159-1 excel file into dataframe
 RC159_5Data <- read_excel("RC159_5a.xlsx", sheet = 1, col_names = TRUE, col_types = NULL, na = "NA", skip = 0)
 ```
-# convert class of dataframeRC159_1Data variables
+
+
+### convert class of dataframeRC159_1Data variables
 ```{r echo = False}
 RC159_5Data$Trt <- as.factor(RC159_5Data$Trt)
 RC159_5Data$concBac <- as.factor(RC159_5Data$concBac)
 
 ```
 
-# summary
+### summary
 ```{r echo = False}
 ### group mtcars by cylinders and return some averages
 RC159_5DataSum <- RC159_5Data %>%
@@ -47,8 +59,7 @@ RC159_5DataSum
 ```
 
 
-#  preliminary analysis of Experiment RC 159-1
-## analysi of variance for total area
+### analysi of variance for total area
 ```{r echo = False}
 # Analysis for Differ
  prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5Data, na.action=na.omit)
@@ -59,4 +70,45 @@ Anova(prelim.lm,type='II')
 ### pair wise t test diff vs PlantId
 ```{r echo = False}
 pairwise.t.test(RC159_5Data$count, RC159_5Data$Trt)
+```
+
+
+## Control removed from dataframe
+
+```{r}
+RC159_5Data <- RC159_5Data %>%
+    filter(concBac != 0)
+```
+
+### summary
+```{r echo = False}
+### group mtcars by cylinders and return some averages
+RC159_5DataSum <- RC159_5Data %>%
+select(Trt, concBac, count) %>%
+group_by(Trt,concBac) %>%
+summarise(Total_mean = mean(count))
+RC159_5DataSum
+# elimate missing data to get diff means
+#df %>% drop_na()
+
+```
+
+
+### analysi of variance for colony count
+```{r echo = False}
+# Analysis for Differ
+ prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5Data, na.action=na.omit)
+summary(prelim.lm)
+
+Anova(prelim.lm,type='II')
+```
+### pair wise t test count  vs Trt
+```{r echo = False}
+pairwise.t.test(RC159_5Data$count, RC159_5Data$Trt)
+```
+
+
+### pair wise t test count  vs concBac
+```{r echo = False}
+pairwise.t.test(RC159_5Data$count, RC159_5Data$concBac)
 ```

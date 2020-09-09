@@ -37,6 +37,7 @@ RC159_5Data$concBac <- as.factor(RC159_5Data$concBac)
 ```
 
 ### summary
+  The following is a summary of the treatments ( antibiotics and no antibiotics) by bacterial concentration. 
 ```{r echo = FALSE}
 ### group mtcars by cylinders and return some averages
 RC159_5DataSum <- RC159_5Data %>%

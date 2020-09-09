@@ -3,13 +3,13 @@ title: "RC 159-5: Evaluation of three differents to coltrol red slime"
 author: ron Collins
 Date: 
 output:
-  word_document: default
+  html_document: default
   pdf_document: default
   html_notebook: default
-  html_document: default
-
+  word_document: default
 ---
 # Introduction
+  Tissue culture tube with callus in Bldg. 001, Rm. 331 after six months are beginning to be contaminated with a red slime.  Consequently, it became imperitive that we find a way to control the bacteria.  Evidently PPm wasn't working.  Maybe at a higher concenation. A series of experiments were planned to evaluate different antibiotics that we have used in the past ro control the bacteria.
 
 ## Contains Control 
 

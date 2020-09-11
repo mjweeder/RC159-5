@@ -1,3 +1,9 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
 
 ----
 title: "RC 159-5.1: Evaluation of three differents to coltrol red slime"
@@ -24,13 +30,13 @@ library(tidyr)
 
 ```{r input RC159_5, echo = FALSE}
 #data inout
-RC159_5Data <- read_excel("RC159_5.1.xlsx", sheet = 1, col_names = TRUE, col_types = NULL, na = "NA", skip = 0)
+RC159_5.1Data <- read_excel("RC159_5.1.xlsx", sheet = 1, col_names = TRUE, col_types = NULL, na = "NA", skip = 0)
 ```
 
 
 ```{r  convert, echo = FALSE}
 # Convert variable type to factor
-RC159_5Data$Trt <- as.factor(RC159_5Data$Trt)
+RC159_5Data.1$Trt <- as.factor(RC159_5.1Data$Trt)
 RC159_5Data$concBac <- as.factor(RC159_5Data$concBac)
 
 ```

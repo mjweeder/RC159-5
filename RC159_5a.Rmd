@@ -3,9 +3,9 @@ title: "RC 159-5: Evaluation of three differents to coltrol red slime"
 author: ron Collins
 Date: 
 output:
-  html_notebook: default
-  pdf_document: default
   html_document: default
+  pdf_document: default
+  html_notebook: default
   word_document: default
 ---
 # Introduction

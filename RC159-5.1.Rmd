@@ -1,0 +1,102 @@
+
+----
+title: "RC 159-5.1: Evaluation of three differents to coltrol red slime"
+author: ron Collins
+Date: 
+output:
+  html_notebook: default
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+# Introduction
+  Tissue culture tube with callus in Bldg. 001, Rm. 331 after six months are beginning to be contaminated with a red slime.  Consequently, it became imperitive that we find a way to control the bacteria.  Evidently PPm wasn't working.  Maybe at a higher concenation. A series of experiments were planned to evaluate two new different antibiotics that we have used in the past ro control the bacteria.
+
+
+```{r load packages, echo = FALSE, warning=FALSE, message=FALSE}
+# load required packages
+library(readxl)
+library(car)
+library(data.table)
+library(dplyr)
+library(tidyr)
+```
+
+```{r input RC159_5, echo = FALSE}
+#data inout
+RC159_5Data <- read_excel("RC159_5.1.xlsx", sheet = 1, col_names = TRUE, col_types = NULL, na = "NA", skip = 0)
+```
+
+
+```{r  convert, echo = FALSE}
+# Convert variable type to factor
+RC159_5Data$Trt <- as.factor(RC159_5Data$Trt)
+RC159_5Data$concBac <- as.factor(RC159_5Data$concBac)
+
+```
+
+### summary
+  The following is a summary of the treatments ( antibiotics and no antibiotics) by bacterial concentration. 
+```{r summary, echo = FALSE, message=FALSE}
+### group mtcars by cylinders and return some averages
+RC159_5DataSum <- RC159_5Data %>%
+select(Trt, concBac, count) %>%
+group_by(Trt,concBac) %>%
+summarise(Total_mean = mean(count))
+RC159_5DataSum
+```
+
+
+
+### analysi of variance for total area
+```{r echo = FALSE}
+# Analysis for Differ
+ prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5Data, na.action=na.omit)
+summary(prelim.lm)
+
+Anova(prelim.lm,type='II')
+```
+
+
+### pair wise t test diff vs PlantId
+```{r echo = FALSE}
+pairwise.t.test(RC159_5Data$count, RC159_5Data$Trt)
+```
+
+
+
+```{r control removed, echo=FALSE, message=FALSE}
+# Control removed from dataframe
+
+RC159_5Data <- RC159_5Data %>%
+    filter(concBac != 0)
+```
+
+### summary
+```{r echo = FALSE}
+RC159_5DataSum <- RC159_5Data %>%
+select(Trt, concBac, count) %>%
+group_by(Trt,concBac) %>%
+summarise(Total_mean = mean(count))
+RC159_5DataSum
+```
+
+
+### analysi of variance for colony count
+```{r echo = FALSE}
+# Analysis for Differ
+ prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5Data, na.action=na.omit)
+summary(prelim.lm)
+
+Anova(prelim.lm,type='II')
+```
+### pair wise t test count  vs Trt
+```{r echo = FALSE}
+pairwise.t.test(RC159_5Data$count, RC159_5Data$Trt)
+```
+
+
+### pair wise t test count  vs concBac
+```{r echo = FALSE}
+pairwise.t.test(RC159_5Data$count, RC159_5Data$concBac)
+```

@@ -399,55 +399,51 @@ summary {
 <div id="summary" class="section level3">
 <h3>summary</h3>
 <p>The following is a summary of the treatments ( antibiotics and no antibiotics) by bacterial concentration.</p>
-<pre><code>## # A tibble: 6 x 3
-## # Groups:   Trt [3]
-##   Trt           concBac Total_mean
-##   &lt;fct&gt;         &lt;fct&gt;        &lt;dbl&gt;
-## 1 with anti.    -4            18  
-## 2 with anti.    -3            57.2
-## 3 without anti. -4            22.7
-## 4 without anti. -3           181  
-## 5 without anti. 0             17  
-## 6 without bac.  0              1.5</code></pre>
+<pre><code>## # A tibble: 5 x 3
+## # Groups:   Trt [2]
+##   Trt          concBac Total_mean
+##   &lt;fct&gt;        &lt;fct&gt;        &lt;dbl&gt;
+## 1 with anti    -4            9.38
+## 2 with anti    -3           36   
+## 3 without anti -4           10.4 
+## 4 without anti -3          103   
+## 5 without anti 0             3.89</code></pre>
 </div>
 <div id="analysi-of-variance-for-total-area" class="section level3">
 <h3>analysi of variance for total area</h3>
 <pre><code>## 
 ## Call:
-## lm(formula = count ~ Trt + concBac + Trt * concBac, data = RC159_5Data, 
+## lm(formula = count ~ Trt + concBac + Trt * concBac, data = RC159_5.1Data, 
 ##     na.action = na.omit)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -83.000  -7.667  -0.750   4.125 162.000 
+## -97.000  -9.429  -3.889   8.719 240.000 
 ## 
-## Coefficients: (3 not defined because of singularities)
-##                            Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)                  18.000     26.958   0.668   0.5152  
-## Trtwithout anti.              4.667     41.179   0.113   0.9114  
-## Trtwithout bac.             -10.833     73.002  -0.148   0.8841  
-## concBac-3                    39.250     38.124   1.030   0.3207  
-## concBac0                     -5.667     62.256  -0.091   0.9288  
-## Trtwithout anti.:concBac-3  119.083     56.117   2.122   0.0522 .
-## Trtwithout bac.:concBac-3        NA         NA      NA       NA  
-## Trtwithout anti.:concBac0        NA         NA      NA       NA  
-## Trtwithout bac.:concBac0         NA         NA      NA       NA  
+## Coefficients: (1 not defined because of singularities)
+##                           Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)                  9.375     18.752   0.500   0.6202  
+## Trtwithout anti              1.054     27.450   0.038   0.9696  
+## concBac-3                   26.625     26.519   1.004   0.3223  
+## concBac0                    -6.540     26.728  -0.245   0.8081  
+## Trtwithout anti:concBac-3   65.946     38.167   1.728   0.0928 .
+## Trtwithout anti:concBac0        NA         NA      NA       NA  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 53.92 on 14 degrees of freedom
-## Multiple R-squared:  0.6763, Adjusted R-squared:  0.5607 
-## F-statistic: 5.849 on 5 and 14 DF,  p-value: 0.004029</code></pre>
+## Residual standard error: 53.04 on 35 degrees of freedom
+## Multiple R-squared:  0.3581, Adjusted R-squared:  0.2847 
+## F-statistic:  4.88 on 4 and 35 DF,  p-value: 0.003108</code></pre>
 <pre><code>## Note: model has aliased coefficients
 ##       sums of squares computed by model comparison</code></pre>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: count
 ##             Sum Sq Df F value   Pr(&gt;F)   
-## Trt          17768  2  3.0561 0.079190 . 
-## concBac      41055  2  7.0617 0.007576 **
-## Trt:concBac  13090  1  4.5031 0.052158 . 
-## Residuals    40696 14                    
+## Trt           9562  1  3.3993 0.073704 . 
+## concBac      44014  2  7.8234 0.001554 **
+## Trt:concBac   8398  1  2.9854 0.092833 . 
+## Residuals    98454 35                    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
@@ -456,11 +452,10 @@ summary {
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
-## data:  RC159_5Data$count and RC159_5Data$Trt 
+## data:  RC159_5.1Data$count and RC159_5.1Data$Trt 
 ## 
-##               with anti. without anti.
-## without anti. 0.21       -            
-## without bac.  0.44       0.13         
+##              with anti
+## without anti 0.43     
 ## 
 ## P value adjustment method: holm</code></pre>
 </div>
@@ -469,44 +464,42 @@ summary {
 <pre><code>## `summarise()` regrouping output by &#39;Trt&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 4 x 3
 ## # Groups:   Trt [2]
-##   Trt           concBac Total_mean
-##   &lt;fct&gt;         &lt;fct&gt;        &lt;dbl&gt;
-## 1 with anti.    -4            18  
-## 2 with anti.    -3            57.2
-## 3 without anti. -4            22.7
-## 4 without anti. -3           181</code></pre>
+##   Trt          concBac   mean
+##   &lt;fct&gt;        &lt;fct&gt;    &lt;dbl&gt;
+## 1 with anti    -4        9.38
+## 2 with anti    -3       36   
+## 3 without anti -4       10.4 
+## 4 without anti -3      103</code></pre>
 </div>
 <div id="analysi-of-variance-for-colony-count" class="section level3">
 <h3>analysi of variance for colony count</h3>
 <pre><code>## 
 ## Call:
-## lm(formula = count ~ Trt + concBac + Trt * concBac, data = RC159_5Data, 
+## lm(formula = count ~ Trt + concBac + Trt * concBac, data = RC159_5.1Data, 
 ##     na.action = na.omit)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -83.000 -10.958   0.000   5.167 162.000 
+## -97.000  -9.714  -7.375  10.312 240.000 
 ## 
 ## Coefficients:
-##                            Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)                  18.000     30.402   0.592   0.5658  
-## Trtwithout anti.              4.667     46.440   0.100   0.9218  
-## concBac-3                    39.250     42.995   0.913   0.3809  
-## Trtwithout anti.:concBac-3  119.083     63.288   1.882   0.0866 .
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+##                           Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                  9.375     21.314   0.440    0.664
+## Trtwithout anti              1.054     31.200   0.034    0.973
+## concBac-3                   26.625     30.142   0.883    0.385
+## Trtwithout anti:concBac-3   65.946     43.382   1.520    0.140
 ## 
-## Residual standard error: 60.8 on 11 degrees of freedom
-## Multiple R-squared:  0.6235, Adjusted R-squared:  0.5208 
-## F-statistic: 6.072 on 3 and 11 DF,  p-value: 0.01081</code></pre>
+## Residual standard error: 60.28 on 27 degrees of freedom
+## Multiple R-squared:  0.3168, Adjusted R-squared:  0.2408 
+## F-statistic: 4.173 on 3 and 27 DF,  p-value: 0.01499</code></pre>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: count
 ##             Sum Sq Df F value  Pr(&gt;F)  
-## Trt          17575  1  4.7537 0.05184 .
-## concBac      32967  1  8.9168 0.01238 *
-## Trt:concBac  13090  1  3.5405 0.08660 .
-## Residuals    40669 11                  
+## Trt           9562  1  2.6312 0.11640  
+## concBac      26430  1  7.2728 0.01191 *
+## Trt:concBac   8398  1  2.3109 0.14010  
+## Residuals    98122 27                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
@@ -515,10 +508,10 @@ summary {
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
-## data:  RC159_5Data$count and RC159_5Data$Trt 
+## data:  RC159_5.1Data$count and RC159_5.1Data$Trt 
 ## 
-##               with anti.
-## without anti. 0.097     
+##              with anti
+## without anti 0.14     
 ## 
 ## P value adjustment method: holm</code></pre>
 </div>
@@ -527,10 +520,78 @@ summary {
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
-## data:  RC159_5Data$count and RC159_5Data$concBac 
+## data:  RC159_5.1Data$count and RC159_5.1Data$concBac 
 ## 
 ##    -4   
-## -3 0.023
+## -3 0.014
+## 
+## P value adjustment method: holm</code></pre>
+</div>
+<div id="summary-2" class="section level3">
+<h3>summary</h3>
+<pre><code>## `summarise()` regrouping output by &#39;Trt&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 4 x 3
+## # Groups:   Trt [2]
+##   Trt          concBac Total_mean
+##   &lt;fct&gt;        &lt;fct&gt;        &lt;dbl&gt;
+## 1 with anti    -4            9.38
+## 2 with anti    -3           36   
+## 3 without anti -4           10.4 
+## 4 without anti -3          103</code></pre>
+</div>
+<div id="analysi-of-variance-for-colony-count-1" class="section level3">
+<h3>analysi of variance for colony count</h3>
+<pre><code>## 
+## Call:
+## lm(formula = count ~ Trt + concBac + Trt * concBac, data = RC159_5.1Data, 
+##     na.action = na.omit)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -97.000  -9.714  -7.375  10.312 240.000 
+## 
+## Coefficients:
+##                           Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                  9.375     21.314   0.440    0.664
+## Trtwithout anti              1.054     31.200   0.034    0.973
+## concBac-3                   26.625     30.142   0.883    0.385
+## Trtwithout anti:concBac-3   65.946     43.382   1.520    0.140
+## 
+## Residual standard error: 60.28 on 27 degrees of freedom
+## Multiple R-squared:  0.3168, Adjusted R-squared:  0.2408 
+## F-statistic: 4.173 on 3 and 27 DF,  p-value: 0.01499</code></pre>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: count
+##             Sum Sq Df F value  Pr(&gt;F)  
+## Trt           9562  1  2.6312 0.11640  
+## concBac      26430  1  7.2728 0.01191 *
+## Trt:concBac   8398  1  2.3109 0.14010  
+## Residuals    98122 27                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="pair-wise-t-test-count-vs-trt-1" class="section level3">
+<h3>pair wise t test count vs Trt</h3>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  RC159_5.1Data$count and RC159_5.1Data$Trt 
+## 
+##              with anti
+## without anti 0.14     
+## 
+## P value adjustment method: holm</code></pre>
+</div>
+<div id="pair-wise-t-test-count-vs-concbac-1" class="section level3">
+<h3>pair wise t test count vs concBac</h3>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  RC159_5.1Data$count and RC159_5.1Data$concBac 
+## 
+##    -4   
+## -3 0.014
 ## 
 ## P value adjustment method: holm</code></pre>
 </div>

@@ -1,12 +1,17 @@
 ---
-title: "RC 159-5: Evaluation of three differents to coltrol red slime"
-author: ron Collins
-Date: 
 output:
-  pdf_document: default
+  word_document: default
+  html_document: default
+---
+----
+title: "RC RC 159-5 Analysis of control of rec bacterial contamination by 3 antibiotics"
+author: "Ron Collins"
+date: "`r Sys.Date()`"
+output: 
   word_document: default
   html_notebook: default
   html_document: default
+  pdf_document: default
 ---
 # Introduction
   Tissue culture tube with callus in Bldg. 001, Rm. 331 after six months are beginning to be contaminated with a red slime.  Consequently, it became imperitive that we find a way to control the bacteria.  Evidently PPm wasn't working.  Maybe at a higher concenation. A series of experiments were planned to evaluate different antibiotics that we have used in the past ro control the bacteria.
@@ -47,7 +52,7 @@ RC159_5DataSum
 
 
 
-### analysi of variance for total area
+### analysi of variance forbacterial count as a result of antibiotics
 ```{r echo = FALSE}
 # Analysis for Differ
  prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5Data, na.action=na.omit)
@@ -55,12 +60,12 @@ summary(prelim.lm)
 
 Anova(prelim.lm,type='II')
 ```
-### pair wise t test diff vs PlantId
+### pair wise t test Count vs trt
 ```{r echo = FALSE}
 pairwise.t.test(RC159_5Data$count, RC159_5Data$Trt)
 ```
 
-
+## Remove back ground control from analysis
 
 ```{r control removed, echo=FALSE, message=FALSE}
 # Control removed from dataframe

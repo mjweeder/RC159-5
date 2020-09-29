@@ -1,7 +1,7 @@
 ---
 output:
-  word_document: default
   html_document: default
+  word_document: default
 ---
 ----
 title: "RC RC 159-5 Analysis of control of rec bacterial contamination by 3 antibiotics"
@@ -14,7 +14,9 @@ output:
   pdf_document: default
 ---
 # Introduction
-  Tissue culture tube with callus in Bldg. 001, Rm. 331 after six months are beginning to be contaminated with a red slime.  Consequently, it became imperitive that we find a way to control the bacteria.  Evidently PPm wasn't working.  Maybe at a higher concenation. A series of experiments were planned to evaluate different antibiotics that we have used in the past ro control the bacteria.
+  Tissue culture tube with callus in Bldg. 001, Rm. 331 after six months are beginning to be contaminated with a red slime.  Consequently, it became imperitive that we find a way to control the bacteria.  Evidently PPm wasn't working.  Maybe at a higher concenation. A series of experiments were planned to evaluate different antibiotics that we have used in the past ro control the bacteria.  The first group of Antibiotic's used are Tetracycline HCl, mg Streptomycin Sulfate, and Chloramphenicol. They will be used at the same rates from prior experiments: 25 mg/liter.
+  This is for the first experimental replicate.
+
 
 
 ```{r load packages, echo = FALSE, warning=FALSE, message=FALSE}
@@ -39,7 +41,7 @@ RC159_5Data$concBac <- as.factor(RC159_5Data$concBac)
 
 ```
 
-### summary
+### summary with background control included
   The following is a summary of the treatments ( antibiotics and no antibiotics) by bacterial concentration. 
 ```{r summary, echo = FALSE, message=FALSE}
 ### group mtcars by cylinders and return some averages
@@ -49,10 +51,10 @@ group_by(Trt,concBac) %>%
 summarise(Total_mean = mean(count))
 RC159_5DataSum
 ```
+From looking at the counts, it appears that the only difference is between bacteria concentration.
 
 
-
-### analysi of variance forbacterial count as a result of antibiotics
+### analysis of variance for bacterial count as a result of antibiotics with background control.
 ```{r echo = FALSE}
 # Analysis for Differ
  prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5Data, na.action=na.omit)
@@ -60,12 +62,18 @@ summary(prelim.lm)
 
 Anova(prelim.lm,type='II')
 ```
-### pair wise t test Count vs trt
+### pair wise t test Count vs trt with background control included
 ```{r echo = FALSE}
 pairwise.t.test(RC159_5Data$count, RC159_5Data$Trt)
 ```
-
-## Remove back ground control from analysis
+  The results are skewed because of the background control.  I do not put much faith in the results.
+  
+  
+### pair wise t test count  vs concBac with background control included
+```{r echo = FALSE}
+pairwise.t.test(RC159_5Data$count, RC159_5Data$concBac)
+```
+  The results are skewed because of the background control.  I do not put much faith in the results. 
 
 ```{r control removed, echo=FALSE, message=FALSE}
 # Control removed from dataframe
@@ -74,7 +82,7 @@ RC159_5Data <- RC159_5Data %>%
     filter(concBac != 0)
 ```
 
-### summary
+### summary with background control removed
 ```{r echo = FALSE}
 RC159_5DataSum <- RC159_5Data %>%
 select(Trt, concBac, count) %>%
@@ -84,7 +92,7 @@ RC159_5DataSum
 ```
 
 
-### analysi of variance for colony count
+### analysi of variance for colony count with background control removed
 ```{r echo = FALSE}
 # Analysis for Differ
  prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5Data, na.action=na.omit)
@@ -92,13 +100,13 @@ summary(prelim.lm)
 
 Anova(prelim.lm,type='II')
 ```
-### pair wise t test count  vs Trt
+### pair wise t test count  vs Trt with background control removed.
 ```{r echo = FALSE}
 pairwise.t.test(RC159_5Data$count, RC159_5Data$Trt)
 ```
 
 
-### pair wise t test count  vs concBac
+### pair wise t test count  vs concBac with background control removed
 ```{r echo = FALSE}
 pairwise.t.test(RC159_5Data$count, RC159_5Data$concBac)
 ```

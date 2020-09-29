@@ -1,0 +1,73 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+----
+title: "RC 159-5.1: Evaluation of three differents to coltrol red slime"
+author: ron Collins
+Date: 
+output:
+  html_notebook: default
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+# Introduction
+       Tissue culture tubes containing callus in Bldg. 001, Rm. 331 after six months are beginning to be contaminated with a red slime.  Consequently, it became imperative that we find a way to control the bacteria.  Evidently PPm at 0.1 % wasn't working.  Initially the five antibiotics used in prior research were evaluated at the recommended rate and three times the recommended rate.None of the antibiotic treatments were significantly different from the control.  It was decided to test PPM at 1 and 10% for control of the red bacteria.
+
+
+```{r "load packages", echo = FALSE, warning=FALSE, message=FALSE}
+# load required packages
+library(readxl)
+library(car)
+library(data.table)
+library(dplyr)
+library(tidyr)
+```
+
+```{r input RC159_5, echo = FALSE}
+#data inout
+RC159_5.4.0Data <- read_excel("RC159_5.4.0.xlsx", sheet = 1, col_names = TRUE, col_types = NULL, na = "NA", skip = 0)
+```
+
+
+
+
+```{r  convert, echo = FALSE}
+# Convert variable type to factor
+RC159_5.4.0Data$trt <- as.factor(RC159_5.4.0Data$trt)
+
+```
+
+### summary
+  The following is a summary of the treatments (0, 1% & 10% PPM) for bacteria count 
+```{r summary, echo = FALSE, message=FALSE}
+### group mtcars by cylinders and return some averages
+RC159_5.4.0DataSum <- RC159_5.4.0Data %>%
+select(trt, Count) %>%
+group_by(trt) %>%
+summarise(Total_mean = mean(Count))
+RC159_5.4.0DataSum
+```
+
+
+
+### analysi of variance for total area
+```{r echo = FALSE}
+# Analysis for Differ
+ prelim.lm <- lm(formula = Count ~ trt, data = RC159_5.4.0Data, na.action=na.omit)
+summary(prelim.lm)
+
+Anova(prelim.lm,type='II')
+```
+### pair wise t test Trt vs Count
+```{r echo = FALSE}
+
+pairwise.t.test(RC159_5.4.0Data$Count, RC159_5.4.0Data$trt)
+```
+
+### Results
+    The ANOVA for three treatments were significantly differet . In the Pairwise comparison of the three treatments, The 0% treatmment differed from 1 & 10 %. The 1 and 10% were not signifficantly different
+    Form Prior studies none of the five antiobiotics that we have used in prior research had any effect on the red bacteria at the recommened rate or at 3 times recommended rate.
+The PPM at 1 & 3% gave 100% control. The question

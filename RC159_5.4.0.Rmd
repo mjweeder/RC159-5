@@ -1,17 +1,13 @@
+
 ---
-output:
-  word_document: default
-  html_document: default
----
-----
-title: "RC 159-5.1: Evaluation of three differents to coltrol red slime"
-author: ron Collins
+title: "RC 159-5.4a: Evaluation of three different of PPM to coltrol red slime"
+author: Ron Collins
 Date: 
 output:
-  html_notebook: default
-  pdf_document: default
-  html_document: default
   word_document: default
+  pdf_document: default
+  html_notebook: default
+  html_document: default
 ---
 # Introduction
        Tissue culture tubes containing callus in Bldg. 001, Rm. 331 after six months are beginning to be contaminated with a red slime.  Consequently, it became imperative that we find a way to control the bacteria.  Evidently PPm at 0.1 % wasn't working.  Initially the five antibiotics used in prior research were evaluated at the recommended rate and three times the recommended rate.None of the antibiotic treatments were significantly different from the control.  It was decided to test PPM at 1 and 10% for control of the red bacteria.

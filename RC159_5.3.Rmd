@@ -1,21 +1,16 @@
+
 ---
-output:
-  word_document: default
-  html_document: default
----
-----
-title: "RC RC 159-5 Analysis of control of rec bacterial contamination by 3 antibiotics"
+title: "RC RC 159-5.3a Analysis of control of rec bacterial contamination by 3 times concentration of two antibiotics antibiotics"
 author: "Ron Collins"
 date: "`r Sys.Date()`"
 output: 
-  word_document: default
-  html_notebook: default
   html_document: default
+  html_notebook: default
+  word_document: default
   pdf_document: default
 ---
 # Introduction
-  Tissue culture tube with callus in Bldg. 001, Rm. 331 after six months are beginning to be contaminated with a red slime.  Consequently, it became imperitive that we find a way to control the bacteria.  Evidently PPm wasn't working.  Maybe at a higher concenation. A series of experiments were planned to evaluate different antibiotics that we have used in the past ro control the bacteria.  The first group of Antibiotic's used are Tetracycline HCl, mg Streptomycin Sulfate, and Chloramphenicol. They will be used at the same rates from prior experiments: 25 mg/liter.
-  This is for the first experimental replicate.
+  The first group of Antibiotic's used are Tetracycline HCl, mg Streptomycin Sulfate, and Chloramphenicol. They did not control the red bacteria. Consequently, two other antibiotics, Penicillin G and Vancomycin at 150 mg per liter will be evaluated.
 
 
 
@@ -28,28 +23,28 @@ library(dplyr)
 library(tidyr)
 ```
 
-```{r input RC159_5, echo = FALSE}
+```{r input RC159_5.3, echo = FALSE}
 #data inout
-RC159_5Data <- read_excel("RC159_5.xlsx", sheet = 1, col_names = TRUE, col_types = NULL, na = "NA", skip = 0)
+RC159_5.3Data <- read_excel("RC159_5.3.xlsx", sheet = 1, col_names = TRUE, col_types = NULL, na = "NA", skip = 0)
 ```
 
 
 ```{r  convert, echo = FALSE}
 # Convert variable type to factor
-RC159_5Data$Trt <- as.factor(RC159_5Data$Trt)
-RC159_5Data$concBac <- as.factor(RC159_5Data$concBac)
+RC159_5.3Data$Trt <- as.factor(RC159_5.3Data$Trt)
+RC159_5.3Data$concBac <- as.factor(RC159_5.3Data$concBac)
 
 ```
 
 ### summary with background control included
   The following is a summary of the treatments ( antibiotics and no antibiotics) by bacterial concentration. 
-```{r summary, echo = FALSE, message=FALSE}
+```{r summary, echo = FALSE}
 ### group mtcars by cylinders and return some averages
-RC159_5DataSum <- RC159_5Data %>%
+RC159_5.3DataSum <- RC159_5.3Data %>%
 select(Trt, concBac, count) %>%
 group_by(Trt,concBac) %>%
 summarise(Total_mean = mean(count))
-RC159_5DataSum
+RC159_5.3DataSum
 ```
 From looking at the counts, it appears that the only difference is between bacteria concentration.
 
@@ -57,56 +52,52 @@ From looking at the counts, it appears that the only difference is between bacte
 ### analysis of variance for bacterial count as a result of antibiotics with background control.
 ```{r echo = FALSE}
 # Analysis for Differ
- prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5Data, na.action=na.omit)
+ prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5.3Data, na.action=na.omit)
 summary(prelim.lm)
 
 Anova(prelim.lm,type='II')
 ```
 ### pair wise t test Count vs trt with background control included
 ```{r echo = FALSE}
-pairwise.t.test(RC159_5Data$count, RC159_5Data$Trt)
+pairwise.t.test(RC159_5.3Data$count, RC159_5.3Data$Trt)
 ```
   The results are skewed because of the background control.  I do not put much faith in the results.
   
   
 ### pair wise t test count  vs concBac with background control included
 ```{r echo = FALSE}
-pairwise.t.test(RC159_5Data$count, RC159_5Data$concBac)
+pairwise.t.test(RC159_5.3Data$count, RC159_5.3Data$concBac)
 ```
   The results are skewed because of the background control.  I do not put much faith in the results. 
 
 ```{r control removed, echo=FALSE, message=FALSE}
 # Control removed from dataframe
 
-RC159_5Data <- RC159_5Data %>%
-    filter(concBac != 0)
+RC159_5.3Data <- RC159_5.3Data %>%
+    filter(concBac != 0, concBac != -3)
 ```
 
 ### summary with background control removed
 ```{r echo = FALSE}
-RC159_5DataSum <- RC159_5Data %>%
-select(Trt, concBac, count) %>%
+RC159_5.3DataSum <- RC159_5.3Data %>%
+select(Trt, count) %>%
 group_by(Trt,concBac) %>%
 summarise(Total_mean = mean(count))
-RC159_5DataSum
+RC159_5.3DataSum
 ```
 
 
 ### analysi of variance for colony count with background control removed
 ```{r echo = FALSE}
 # Analysis for Differ
- prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5Data, na.action=na.omit)
+ prelim.lm <- lm(formula = count ~ Trt +  concBac + Trt*concBac, data = RC159_5.3Data, na.action=na.omit)
 summary(prelim.lm)
 
 Anova(prelim.lm,type='II')
 ```
 ### pair wise t test count  vs Trt with background control removed.
 ```{r echo = FALSE}
-pairwise.t.test(RC159_5Data$count, RC159_5Data$Trt)
+pairwise.t.test(RC159_5.3Data$count, RC159_5.3Data$Trt)
 ```
 
 
-### pair wise t test count  vs concBac with background control removed
-```{r echo = FALSE}
-pairwise.t.test(RC159_5Data$count, RC159_5Data$concBac)
-```
